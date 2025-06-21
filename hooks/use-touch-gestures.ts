@@ -24,7 +24,7 @@ interface TouchGestureOptions {
   onSwipe?: (gesture: SwipeGesture) => void
   onPinch?: (gesture: PinchGesture) => void
   onTap?: (point: TouchPoint) => void
-  onDoubleTap?: (point: TouchPoint) => void
+  onDoubleTap?: (event: any) => void
   onLongPress?: (point: TouchPoint) => void
   swipeThreshold?: number
   longPressDelay?: number
@@ -146,13 +146,13 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
         const now = Date.now()
         const lastTap = lastTapRef.current
 
-        if (lastTap && 
+        if (lastTap &&
             now - lastTap.timestamp < doubleTapDelay &&
             Math.abs(touchEnd.x - lastTap.x) < 50 &&
             Math.abs(touchEnd.y - lastTap.y) < 50) {
           // 双击
           if (onDoubleTap) {
-            onDoubleTap(touchEnd)
+            onDoubleTap({ target: e.target, point: touchEnd })
           }
           lastTapRef.current = null
         } else {

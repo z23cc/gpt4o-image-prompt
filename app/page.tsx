@@ -243,10 +243,17 @@ function HomeContent() {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                 }
               }}
-              onDoubleTap={() => {
+              onDoubleTap={(event) => {
                 if (isMobile) {
-                  clearFilters()
-                  toast.success('已清除所有筛选条件')
+                  // 检查双击是否发生在图片或按钮等交互元素上
+                  const target = event.target as HTMLElement
+                  const isInteractiveElement = target.closest('img, button, a, [role="button"], .cursor-pointer')
+
+                  // 只有在非交互元素上双击才清除筛选条件
+                  if (!isInteractiveElement) {
+                    clearFilters()
+                    toast.success('已清除所有筛选条件')
+                  }
                 }
               }}
             >

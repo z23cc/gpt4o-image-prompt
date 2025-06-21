@@ -68,7 +68,10 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                 <Card className="overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-500 bg-white/80 backdrop-blur-sm hover:scale-[1.02] hover:-translate-y-1">
                   <CardContent className="p-0">
                     {/* 图片容器 */}
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                    <div
+                      className="relative aspect-[4/3] overflow-hidden cursor-pointer"
+                      onClick={() => openImageModal(image)}
+                    >
                       <Image
                         src={image.src || "/placeholder.svg"}
                         alt={image.prompt}
@@ -166,7 +169,10 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                   <CardContent className="p-0">
                     <div className="flex gap-4 p-4">
                       {/* 图片缩略图 */}
-                      <div className="relative w-32 h-24 flex-shrink-0 overflow-hidden rounded-lg group">
+                      <div
+                        className="relative w-32 h-24 flex-shrink-0 overflow-hidden rounded-lg group cursor-pointer"
+                        onClick={() => openImageModal(image)}
+                      >
                         <Image
                           src={image.src || "/placeholder.svg"}
                           alt={image.prompt}

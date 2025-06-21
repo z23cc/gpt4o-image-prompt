@@ -11,7 +11,7 @@ interface MobileGesturesProps {
   onSwipeRight?: () => void
   onSwipeUp?: () => void
   onSwipeDown?: () => void
-  onDoubleTap?: () => void
+  onDoubleTap?: (event: any) => void
   onLongPress?: () => void
   children: React.ReactNode
   className?: string
@@ -56,10 +56,10 @@ export function MobileGestures({
           break
       }
     },
-    onDoubleTap: () => {
+    onDoubleTap: (event) => {
       setGestureHint('double-tap')
       setTimeout(() => setGestureHint(null), 500)
-      onDoubleTap?.()
+      onDoubleTap?.(event)
     },
     onLongPress: () => {
       setGestureHint('long-press')
