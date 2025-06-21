@@ -88,7 +88,7 @@ export function VirtualGrid({
   )
 }
 
-// Hook for responsive grid calculations
+// Hook for responsive grid calculations - 移动端优化
 export function useResponsiveGrid() {
   const [dimensions, setDimensions] = useState({
     itemsPerRow: 4,
@@ -99,44 +99,74 @@ export function useResponsiveGrid() {
   useEffect(() => {
     const updateDimensions = () => {
       const width = window.innerWidth
-      
+      const height = window.innerHeight
+      const isMobile = width < 768
+      const isLandscape = width > height
+
       let itemsPerRow = 4
       let itemHeight = 300
       let gap = 24
 
-      if (width < 640) {
-        // Mobile
+      if (width < 480) {
+        // Extra small mobile
         itemsPerRow = 1
-        itemHeight = 280
-        gap = 16
+        itemHeight = isLandscape ? 200 : 280
+        gap = 12
+      } else if (width < 640) {
+        // Small mobile
+        itemsPerRow = isLandscape ? 2 : 1
+        itemHeight = isLandscape ? 180 : 260
+        gap = 14
       } else if (width < 768) {
-        // Small tablet
+        // Large mobile / Small tablet
         itemsPerRow = 2
-        itemHeight = 290
-        gap = 20
+        itemHeight = isLandscape ? 200 : 280
+        gap = 16
       } else if (width < 1024) {
         // Tablet
-        itemsPerRow = 3
-        itemHeight = 295
-        gap = 22
+        itemsPerRow = isLandscape ? 4 : 3
+        itemHeight = 290
+        gap = 20
       } else if (width < 1280) {
         // Desktop
         itemsPerRow = 4
         itemHeight = 300
-        gap = 24
-      } else {
+        gap = 22
+      } else if (width < 1536) {
         // Large desktop
         itemsPerRow = 5
         itemHeight = 300
         gap = 24
+      } else {
+        // Extra large desktop
+        itemsPerRow = 6
+        itemHeight = 300
+        gap = 24
+      }
+
+      // 移动端性能优化：减少高度以提升滚动性能
+      if (isMobile && itemHeight > 250) {
+        itemHeight = Math.max(200, itemHeight - 50)
       }
 
       setDimensions({ itemsPerRow, itemHeight, gap })
     }
 
     updateDimensions()
-    window.addEventListener('resize', updateDimensions)
-    return () => window.removeEventListener('resize', updateDimensions)
+
+    // 使用 ResizeObserver 替代 resize 事件以提升性能
+    const resizeObserver = new ResizeObserver(updateDimensions)
+    resizeObserver.observe(document.documentElement)
+
+    // 监听屏幕方向变化
+    window.addEventListener('orientationchange', () => {
+      setTimeout(updateDimensions, 100)
+    })
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('orientationchange', updateDimensions)
+    }
   }, [])
 
   return dimensions

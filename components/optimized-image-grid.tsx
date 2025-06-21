@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ImageModal } from "./image-modal"
 import { VirtualGrid, useResponsiveGrid, LazyImage } from "./virtual-grid"
-import { useSafeAreaDimensions } from "./layout-wrapper"
-import { Copy, Eye, Sparkles, Tag } from "lucide-react"
+import { OptimizedImage, useImagePreloader } from "./optimized-image"
+import { useSafeAreaDimensions } from "@/hooks/use-safe-area"
+import { usePerformanceMonitor, usePerformanceOptimization } from "@/hooks/use-performance-monitor"
+import { useEnhancedMobile, useMobilePerformance } from "@/hooks/use-safe-area"
+import { Copy, Eye, Sparkles, Tag, Zap, AlertTriangle, X } from "lucide-react"
 import toast from "react-hot-toast"
 import type { ImageWithPrompt } from "@/types/types"
 import { CATEGORIES } from "@/types/types"
@@ -18,21 +21,69 @@ interface OptimizedImageGridProps {
   enableVirtualization?: boolean
 }
 
-export function OptimizedImageGrid({ 
-  images, 
+export function OptimizedImageGrid({
+  images,
   viewMode = 'grid',
-  enableVirtualization = true 
+  enableVirtualization = true
 }: OptimizedImageGridProps) {
   const [selectedImage, setSelectedImage] = useState<ImageWithPrompt | null>(null)
+  const [showPerformanceWarning, setShowPerformanceWarning] = useState(false)
+
+  // 响应式和性能 Hooks
   const { itemsPerRow, itemHeight, gap } = useResponsiveGrid()
   const { safeHeight } = useSafeAreaDimensions()
+  const { isMobile, screenSize } = useEnhancedMobile()
+  const { performanceMode, shouldUseVirtualization, shouldPreloadImages } = useMobilePerformance()
+  const { metrics, measureRenderTime } = usePerformanceMonitor()
+  const { suggestions, performanceLevel, shouldOptimize } = usePerformanceOptimization()
+  const { preload, preloadBatch } = useImagePreloader()
 
   // Use safe area height for virtual scrolling container
-  const containerHeight = Math.max(400, Math.min(safeHeight, 1000))
+  const containerHeight = Math.max(400, Math.min(safeHeight, isMobile ? 800 : 1000))
 
   const getCategoryInfo = (categoryId: string) => {
     return CATEGORIES.find(cat => cat.id === categoryId) || CATEGORIES[0]
   }
+
+  // 性能优化：预加载可见图片
+  useEffect(() => {
+    if (shouldPreloadImages && images.length > 0) {
+      const visibleImages = images.slice(0, itemsPerRow * 2) // 预加载前两行
+      const imageSources = visibleImages.map(img => img.src).filter(Boolean) as string[]
+
+      if (imageSources.length > 0) {
+        preloadBatch(imageSources).catch(console.warn)
+      }
+    }
+  }, [images, shouldPreloadImages, itemsPerRow, preloadBatch])
+
+  // 性能监控：显示警告
+  useEffect(() => {
+    if (shouldOptimize && !showPerformanceWarning) {
+      setShowPerformanceWarning(true)
+
+      if (suggestions.length > 0) {
+        toast.error(`性能较低，建议：${suggestions[0]}`, {
+          icon: "⚡",
+          duration: 5000,
+        })
+      }
+    }
+  }, [shouldOptimize, suggestions, showPerformanceWarning])
+
+  // 动态调整虚拟化阈值
+  const getVirtualizationThreshold = useMemo(() => {
+    switch (performanceMode) {
+      case 'battery':
+        return 20
+      case 'balanced':
+        return 50
+      case 'high':
+        return 100
+      default:
+        return 50
+    }
+  }, [performanceMode])
 
   const copyToClipboard = useCallback((text: string) => {
     navigator.clipboard
@@ -63,23 +114,38 @@ export function OptimizedImageGrid({
     setSelectedImage(null)
   }, [])
 
-  // 渲染单个图片项目
+  // 渲染单个图片项目 - 移动端优化
   const renderGridItem = useCallback((image: ImageWithPrompt, index: number) => {
     const categoryInfo = getCategoryInfo(image.category)
-    
+    const endRenderTime = measureRenderTime()
+
     return (
       <div
-        className="animate-in fade-in-0 slide-in-from-bottom-4 group h-full"
-        style={{ animationDelay: `${(index % 20) * 50}ms` }}
+        className={`
+          animate-in fade-in-0 slide-in-from-bottom-4 group h-full
+          ${performanceMode === 'battery' ? 'transition-none' : 'transition-all duration-300'}
+        `}
+        style={{
+          animationDelay: performanceMode === 'battery' ? '0ms' : `${(index % 20) * 50}ms`
+        }}
+        onAnimationEnd={endRenderTime}
       >
-        <Card className="overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-500 bg-white/80 backdrop-blur-sm hover:scale-[1.02] hover:-translate-y-1 h-full">
+        <Card className={`
+          overflow-hidden border-0 shadow-md bg-white/80 backdrop-blur-sm h-full
+          ${performanceMode === 'battery'
+            ? 'hover:shadow-lg transition-shadow duration-200'
+            : 'hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1'
+          }
+        `}>
           <CardContent className="p-0 h-full flex flex-col">
             {/* 图片容器 */}
             <div className="relative aspect-[4/3] overflow-hidden">
-              <LazyImage
+              <OptimizedImage
                 src={image.src || "/placeholder.svg"}
                 alt={image.prompt}
                 className="w-full h-full"
+                priority={index < itemsPerRow} // 首行图片优先加载
+                quality={performanceMode === 'high' ? 90 : performanceMode === 'balanced' ? 75 : 60}
               />
               
               {/* 分类标签 */}
@@ -155,24 +221,42 @@ export function OptimizedImageGrid({
     )
   }, [copyToClipboard, openImageModal])
 
-  // 渲染列表项目
+  // 渲染列表项目 - 移动端优化
   const renderListItem = useCallback((image: ImageWithPrompt, index: number) => {
     const categoryInfo = getCategoryInfo(image.category)
-    
+    const endRenderTime = measureRenderTime()
+
     return (
       <div
-        className="animate-in fade-in-0 slide-in-from-left-4"
-        style={{ animationDelay: `${(index % 10) * 25}ms` }}
+        className={`
+          animate-in fade-in-0 slide-in-from-left-4
+          ${performanceMode === 'battery' ? 'transition-none' : ''}
+        `}
+        style={{
+          animationDelay: performanceMode === 'battery' ? '0ms' : `${(index % 10) * 25}ms`
+        }}
+        onAnimationEnd={endRenderTime}
       >
-        <Card className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm">
+        <Card className={`
+          overflow-hidden border-0 shadow-md bg-white/80 backdrop-blur-sm
+          ${performanceMode === 'battery'
+            ? 'hover:shadow-lg transition-shadow duration-200'
+            : 'hover:shadow-lg transition-all duration-300'
+          }
+        `}>
           <CardContent className="p-0">
-            <div className="flex gap-4 p-4">
+            <div className={`flex gap-4 p-4 ${isMobile ? 'gap-3 p-3' : ''}`}>
               {/* 图片缩略图 */}
-              <div className="relative w-32 h-24 flex-shrink-0 overflow-hidden rounded-lg group">
-                <LazyImage
+              <div className={`
+                relative flex-shrink-0 overflow-hidden rounded-lg group
+                ${isMobile ? 'w-24 h-18' : 'w-32 h-24'}
+              `}>
+                <OptimizedImage
                   src={image.src || "/placeholder.svg"}
                   alt={image.prompt}
                   className="w-full h-full"
+                  priority={index < 5} // 前5个列表项优先加载
+                  quality={performanceMode === 'high' ? 85 : performanceMode === 'balanced' ? 70 : 55}
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Button
@@ -233,13 +317,38 @@ export function OptimizedImageGrid({
     )
   }, [copyToClipboard, openImageModal])
 
-  // 决定是否使用虚拟化
-  const shouldUseVirtualization = enableVirtualization && images.length > 50
+  // 决定是否使用虚拟化 - 性能优化
+  const shouldUseVirtualizationNow = useMemo(() => {
+    return enableVirtualization &&
+           shouldUseVirtualization &&
+           images.length > getVirtualizationThreshold
+  }, [enableVirtualization, shouldUseVirtualization, images.length, getVirtualizationThreshold])
 
   return (
     <>
+      {/* 性能警告 */}
+      {showPerformanceWarning && performanceLevel === 'poor' && (
+        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-2">
+          <AlertTriangle className="h-4 w-4 text-amber-600" />
+          <div className="flex-1 text-sm text-amber-800">
+            <span className="font-medium">性能较低</span>
+            {suggestions.length > 0 && (
+              <span className="ml-1">- {suggestions[0]}</span>
+            )}
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowPerformanceWarning(false)}
+            className="h-6 w-6 p-0 text-amber-600 hover:text-amber-800"
+          >
+            <X className="h-3 w-3" />
+          </Button>
+        </div>
+      )}
+
       {viewMode === 'grid' ? (
-        shouldUseVirtualization ? (
+        shouldUseVirtualizationNow ? (
           <VirtualGrid
             items={images}
             itemHeight={itemHeight}
@@ -249,7 +358,13 @@ export function OptimizedImageGrid({
             renderItem={renderGridItem}
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 pb-8">
+          <div className={`
+            grid gap-6 pb-8
+            ${isMobile
+              ? 'grid-cols-1 gap-4'
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'
+            }
+          `}>
             {images.map((image, index) => (
               <div key={image.id || index}>
                 {renderGridItem(image, index)}
@@ -258,7 +373,7 @@ export function OptimizedImageGrid({
           </div>
         )
       ) : (
-        <div className="space-y-4 pb-8">
+        <div className={`pb-8 ${isMobile ? 'space-y-3' : 'space-y-4'}`}>
           {images.map((image, index) => (
             <div key={image.id || index}>
               {renderListItem(image, index)}
