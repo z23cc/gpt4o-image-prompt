@@ -36,24 +36,27 @@ export function MobileGestures({
 
   const { attachListeners } = useTouchGestures({
     onSwipe: (gesture) => {
-      // 显示手势提示
-      setGestureHint(gesture.direction)
-      setTimeout(() => setGestureHint(null), 500)
+      // 只有在快速滑动时才触发手势
+      if (gesture.velocity > 0.5) {
+        // 显示手势提示
+        setGestureHint(gesture.direction)
+        setTimeout(() => setGestureHint(null), 500)
 
-      // 执行对应的回调
-      switch (gesture.direction) {
-        case 'left':
-          onSwipeLeft?.()
-          break
-        case 'right':
-          onSwipeRight?.()
-          break
-        case 'up':
-          onSwipeUp?.()
-          break
-        case 'down':
-          onSwipeDown?.()
-          break
+        // 执行对应的回调
+        switch (gesture.direction) {
+          case 'left':
+            onSwipeLeft?.()
+            break
+          case 'right':
+            onSwipeRight?.()
+            break
+          case 'up':
+            onSwipeUp?.()
+            break
+          case 'down':
+            onSwipeDown?.()
+            break
+        }
       }
     },
     onDoubleTap: (event) => {
@@ -66,7 +69,7 @@ export function MobileGestures({
       setTimeout(() => setGestureHint(null), 500)
       onLongPress?.()
     },
-    swipeThreshold: 50,
+    swipeThreshold: 100,
     longPressDelay: 600
   })
 

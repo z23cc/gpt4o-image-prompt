@@ -42,7 +42,7 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
     swipeThreshold = 50,
     longPressDelay = 500,
     doubleTapDelay = 300,
-    preventDefault = true
+    preventDefault = false
   } = options
 
   const touchStartRef = useRef<TouchPoint | null>(null)
@@ -76,12 +76,8 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
   }, [])
 
   const handleTouchStart = useCallback((e: TouchEvent) => {
-    if (preventDefault) {
-      e.preventDefault()
-    }
-
     const touches = e.touches
-    
+
     if (touches.length === 1) {
       // 单指触摸
       const touchPoint = getTouchPoint(touches[0])
@@ -94,25 +90,25 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
         }, longPressDelay)
       }
     } else if (touches.length === 2) {
-      // 双指触摸 - 准备缩放
+      // 双指触摸 - 准备缩放，阻止默认行为
+      if (onPinch) {
+        e.preventDefault()
+      }
       clearLongPressTimer()
       initialDistanceRef.current = getDistance(touches[0], touches[1])
       lastScaleRef.current = 1
     }
-  }, [getTouchPoint, getDistance, onLongPress, longPressDelay, preventDefault, clearLongPressTimer])
+  }, [getTouchPoint, getDistance, onLongPress, longPressDelay, onPinch, clearLongPressTimer])
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
-    if (preventDefault) {
-      e.preventDefault()
-    }
-
     const touches = e.touches
 
     if (touches.length === 1) {
       // 单指移动 - 取消长按
       clearLongPressTimer()
     } else if (touches.length === 2 && onPinch) {
-      // 双指移动 - 缩放手势
+      // 双指移动 - 缩放手势，阻止默认行为
+      e.preventDefault()
       const currentDistance = getDistance(touches[0], touches[1])
       const scale = currentDistance / initialDistanceRef.current
       const center = getCenter(touches[0], touches[1])
@@ -122,13 +118,9 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
         lastScaleRef.current = scale
       }
     }
-  }, [getDistance, getCenter, onPinch, preventDefault, clearLongPressTimer])
+  }, [getDistance, getCenter, onPinch, clearLongPressTimer])
 
   const handleTouchEnd = useCallback((e: TouchEvent) => {
-    if (preventDefault) {
-      e.preventDefault()
-    }
-
     clearLongPressTimer()
 
     const touches = e.changedTouches
@@ -183,12 +175,12 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
     }
 
     touchStartRef.current = null
-  }, [getTouchPoint, onSwipe, onTap, onDoubleTap, swipeThreshold, doubleTapDelay, preventDefault, clearLongPressTimer])
+  }, [getTouchPoint, onSwipe, onTap, onDoubleTap, swipeThreshold, doubleTapDelay, clearLongPressTimer])
 
   const attachListeners = useCallback((element: HTMLElement) => {
-    element.addEventListener('touchstart', handleTouchStart, { passive: !preventDefault })
-    element.addEventListener('touchmove', handleTouchMove, { passive: !preventDefault })
-    element.addEventListener('touchend', handleTouchEnd, { passive: !preventDefault })
+    element.addEventListener('touchstart', handleTouchStart, { passive: true })
+    element.addEventListener('touchmove', handleTouchMove, { passive: false })
+    element.addEventListener('touchend', handleTouchEnd, { passive: true })
 
     return () => {
       element.removeEventListener('touchstart', handleTouchStart)
@@ -196,7 +188,7 @@ export function useTouchGestures(options: TouchGestureOptions = {}) {
       element.removeEventListener('touchend', handleTouchEnd)
       clearLongPressTimer()
     }
-  }, [handleTouchStart, handleTouchMove, handleTouchEnd, preventDefault, clearLongPressTimer])
+  }, [handleTouchStart, handleTouchMove, handleTouchEnd, clearLongPressTimer])
 
   return { attachListeners }
 }
