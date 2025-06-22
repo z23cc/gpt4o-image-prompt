@@ -1,5 +1,140 @@
 [
   {
+    "id": "2c7666d5-af25-4007-b149-ee2462834056",
+    "prompt": "将照片中的人物转化为Funko Pop公仔包装盒风格，以等距视角（isometric）呈现。包装盒上标注标题“JAMES BOND”，盒内展示照片中的人物形象，旁边搭配其标志性必备物品（手枪、手表、西装等）。在包装盒旁边展示公仔本体的实物效果，采用逼真且具真实感的渲染风格。",
+    "imageUrl": "/generated/2c7666d5-af25-4007-b149-ee2462834056.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/2c7666d5-af25-4007-b149-ee2462834056.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T10:10:28.985Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750586917963-tgzh2u.png"
+    ]
+  },
+  {
+    "id": "a21fca49-1826-4e27-87ed-63122b6ca155",
+    "prompt": "将这张照片变成一个摇头娃娃：头部稍微放大，保持面部准确，身体卡通化。[把它放在书架上]。",
+    "imageUrl": "/generated/a21fca49-1826-4e27-87ed-63122b6ca155.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/a21fca49-1826-4e27-87ed-63122b6ca155.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T10:00:31.290Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750586232469-qbnvhu.png"
+    ]
+  },
+  {
+    "id": "eb7e476b-261b-4ddd-bd26-961245e7f0df",
+    "prompt": "参考所附自拍照，生成一张专业肖像照，精准保留面部特征（脸型、发型、肤色、表情），头部摆正。使用影棚级专业灯光，背景柔和中性。着装调整为正式职业装，整体形象自信且亲和，适合作为LinkedIn个人资料。图片比例3:4。",
+    "imageUrl": "/generated/eb7e476b-261b-4ddd-bd26-961245e7f0df.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/eb7e476b-261b-4ddd-bd26-961245e7f0df.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T09:47:53.219Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750585569638-usy50z.png"
+    ]
+  },
+  {
+    "id": "b8a3f01a-c022-4720-8459-940036982bd5",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/b8a3f01a-c022-4720-8459-940036982bd5.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/b8a3f01a-c022-4720-8459-940036982bd5.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T09:42:44.139Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750585198145-c78o7q.png"
+    ]
+  },
+  {
+    "id": "963229bc-a015-4bf1-bdbd-44482c710862",
+    "prompt": "3D Q版角色穿过传送门，牵着观众的手，转身动态回头看。传送门外背景是观众的现实世界，一个典型程序员的书房，有书桌、显示器和笔记本电脑。传送门内是3D Q版世界，细节丰富，整体蓝色调，与现实世界形成鲜明对比。传送门散发神秘的蓝紫色光芒，完美椭圆形框架位于画面中央。从第三人称视角拍摄，显示观众的手被拉入角色世界。3:2宽高比，生动捕捉动态瞬间。",
+    "imageUrl": "/generated/963229bc-a015-4bf1-bdbd-44482c710862.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/963229bc-a015-4bf1-bdbd-44482c710862.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "text-to-image",
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T09:31:18.844Z",
+    "status": "completed",
+    "referenceImages": []
+  },
+  {
+    "id": "a2d924b7-4bcd-478f-8170-3b41d5adad89",
+    "prompt": "3D Q版风格角色从拍立得照片中走出，一只手握持相纸，角色突破二维相片边框，进入现实空间，展现出强烈的立体感和动态效果。背景柔和，光线柔和，构图中心突出角色的动态姿态。",
+    "imageUrl": "/generated/a2d924b7-4bcd-478f-8170-3b41d5adad89.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/a2d924b7-4bcd-478f-8170-3b41d5adad89.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T09:05:52.329Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750582981456-xrbtrm.png"
+    ]
+  },
+  {
     "id": "9c78c702-8f39-4380-bf85-fea867b34813",
     "prompt": "照片中的角色的 3D Q 版形象穿过传送门，牵着观众的手，在将观众拉向前时动态地回头一看。传送门外的背景是观众的现实世界，一个典型的程序员的书房，有书桌，显示器和笔记本电脑，传送门内是角色所处的3D Q 版世界，细节可以参考照片，整体呈蓝色调，和现实世界形成鲜明对比。传送门散发着神秘的蓝色和紫色色调，是两个世界之间的完美椭圆形框架处在画面中间。从第三人称视角拍摄的摄像机角度，显示观看者的手被拉入角色世界。3：2 的宽高比。",
     "imageUrl": "/generated/9c78c702-8f39-4380-bf85-fea867b34813.png",
