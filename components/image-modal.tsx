@@ -16,20 +16,23 @@ import {
   Maximize2,
   Minimize2,
   Share2,
-  Info
+  Info,
+  Wand2
 } from "lucide-react"
 import toast from "react-hot-toast"
 import { useTouchGestures, useTouchFeedback } from "@/hooks/use-touch-gestures"
 import { useEnhancedMobile, useSafeAreaDimensions } from "@/hooks/use-safe-area"
+import { usePromptCopy } from "@/hooks/use-prompt-copy"
 
 interface ImageModalProps {
   isOpen: boolean
   onClose: () => void
   imageSrc: string
   prompt: string
+  category?: string
 }
 
-export function ImageModal({ isOpen, onClose, imageSrc, prompt }: ImageModalProps) {
+export function ImageModal({ isOpen, onClose, imageSrc, prompt, category }: ImageModalProps) {
   const [scale, setScale] = useState(1)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
@@ -43,6 +46,9 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt }: ImageModalProp
 
   // 触摸反馈
   const { addTouchFeedback } = useTouchFeedback()
+
+  // 提示词复制功能
+  const { copyOnly, copyAndGenerate } = usePromptCopy()
 
   // 引用
   const imageContainerRef = useRef<HTMLDivElement>(null)
@@ -243,18 +249,12 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt }: ImageModalProp
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose, isFullscreen, zoomIn, zoomOut, resetZoom])
 
-  const copyPrompt = () => {
-    navigator.clipboard.writeText(prompt).then(() => {
-      toast.success("提示词已复制！", {
-        icon: "✨",
-        style: {
-          borderRadius: "12px",
-          background: "rgba(255, 255, 255, 0.95)",
-          backdropFilter: "blur(10px)",
-          boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-        },
-      })
-    })
+  const handleCopyPrompt = async () => {
+    await copyOnly(prompt)
+  }
+
+  const handleCopyAndGenerate = () => {
+    copyAndGenerate(prompt, category)
   }
 
   const downloadImage = () => {
@@ -446,13 +446,23 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt }: ImageModalProp
                       </p>
                     </div>
 
-                    <Button
-                      onClick={copyPrompt}
-                      className="touch-feedback-btn w-full gap-2 bg-blue-600 hover:bg-blue-700 transition-all duration-200"
-                    >
-                      <Copy className="h-4 w-4" />
-                      复制提示词
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={handleCopyPrompt}
+                        variant="outline"
+                        className="touch-feedback-btn flex-1 gap-2 border-slate-600 text-slate-200 hover:bg-slate-700 transition-all duration-200"
+                      >
+                        <Copy className="h-4 w-4" />
+                        复制
+                      </Button>
+                      <Button
+                        onClick={handleCopyAndGenerate}
+                        className="touch-feedback-btn flex-1 gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
+                      >
+                        <Wand2 className="h-4 w-4" />
+                        生成
+                      </Button>
+                    </div>
 
                     <div className="pt-2 border-t border-slate-600">
                       <h4 className="text-xs font-medium text-slate-400 mb-2">操作提示</h4>
@@ -497,19 +507,28 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt }: ImageModalProp
 
                   <div className="flex gap-2">
                     <Button
-                      onClick={copyPrompt}
-                      className="touch-feedback-btn flex-1 gap-2 bg-blue-600 hover:bg-blue-700 transition-all duration-200"
+                      onClick={handleCopyPrompt}
+                      variant="outline"
+                      className="touch-feedback-btn flex-1 gap-2 border-slate-600 text-slate-200 hover:bg-slate-700 transition-all duration-200"
                     >
                       <Copy className="h-4 w-4" />
                       复制
                     </Button>
 
                     <Button
+                      onClick={handleCopyAndGenerate}
+                      className="touch-feedback-btn flex-1 gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
+                    >
+                      <Wand2 className="h-4 w-4" />
+                      生成
+                    </Button>
+
+                    <Button
                       onClick={downloadImage}
-                      className="touch-feedback-btn flex-1 gap-2 bg-green-600 hover:bg-green-700 transition-all duration-200"
+                      variant="outline"
+                      className="touch-feedback-btn gap-2 border-slate-600 text-slate-200 hover:bg-slate-700 transition-all duration-200"
                     >
                       <Download className="h-4 w-4" />
-                      下载
                     </Button>
                   </div>
 

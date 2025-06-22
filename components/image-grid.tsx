@@ -6,10 +6,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ImageModal } from "./image-modal"
-import { Copy, Eye, Sparkles, Tag } from "lucide-react"
+import { Copy, Eye, Sparkles, Tag, Wand2 } from "lucide-react"
 import toast from "react-hot-toast"
 import type { ImageWithPrompt } from "@/types/types"
 import { CATEGORIES } from "@/types/types"
+import { usePromptCopy } from "@/hooks/use-prompt-copy"
 
 interface ImageGridProps {
   images: ImageWithPrompt[]
@@ -18,30 +19,20 @@ interface ImageGridProps {
 
 export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
   const [selectedImage, setSelectedImage] = useState<ImageWithPrompt | null>(null)
+  const { copyOnly, copyAndGenerate } = usePromptCopy()
 
   const getCategoryInfo = (categoryId: string) => {
     return CATEGORIES.find(cat => cat.id === categoryId) || CATEGORIES[0]
   }
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        toast.success("提示词已复制到剪贴板！", {
-          icon: "✨",
-          style: {
-            borderRadius: "12px",
-            background: "rgba(255, 255, 255, 0.95)",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(148, 163, 184, 0.2)",
-            color: "#334155",
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          },
-        })
-      })
-      .catch(() => {
-        toast.error("复制失败，请重试")
-      })
+  const handleCopyPrompt = async (prompt: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    await copyOnly(prompt)
+  }
+
+  const handleCopyAndGenerate = (prompt: string, category: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    copyAndGenerate(prompt, category)
   }
 
   const openImageModal = (image: ImageWithPrompt) => {
@@ -96,7 +87,10 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                           size="sm"
                           variant="secondary"
                           className="bg-white/90 hover:bg-white text-slate-800 gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
-                          onClick={() => openImageModal(image)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            openImageModal(image)
+                          }}
                         >
                           <Eye className="h-4 w-4" />
                           查看
@@ -105,10 +99,19 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                           size="sm"
                           variant="secondary"
                           className="bg-white/90 hover:bg-white text-slate-800 gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75"
-                          onClick={() => copyToClipboard(image.prompt)}
+                          onClick={(e) => handleCopyPrompt(image.prompt, e)}
                         >
                           <Copy className="h-4 w-4" />
                           复制
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100"
+                          onClick={(e) => handleCopyAndGenerate(image.prompt, image.category, e)}
+                        >
+                          <Wand2 className="h-4 w-4" />
+                          生成
                         </Button>
                       </div>
                     </div>
@@ -136,15 +139,25 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                         </div>
                       )}
 
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full gap-2 hover:bg-slate-50 hover:scale-105 transition-all duration-200 border-slate-200"
-                        onClick={() => copyToClipboard(image.prompt)}
-                      >
-                        <Copy className="h-4 w-4" />
-                        复制提示词
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex-1 gap-2 hover:bg-slate-50 transition-all duration-200 border-slate-200"
+                          onClick={(e) => handleCopyPrompt(image.prompt, e)}
+                        >
+                          <Copy className="h-4 w-4" />
+                          复制
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1 gap-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white transition-all duration-200"
+                          onClick={(e) => handleCopyAndGenerate(image.prompt, image.category, e)}
+                        >
+                          <Wand2 className="h-4 w-4" />
+                          生成
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -220,15 +233,25 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                               </div>
                             )}
                           </div>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="gap-2 hover:bg-slate-50 transition-all duration-200"
-                            onClick={() => copyToClipboard(image.prompt)}
-                          >
-                            <Copy className="h-4 w-4" />
-                            复制
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="gap-2 hover:bg-slate-50 transition-all duration-200"
+                              onClick={(e) => handleCopyPrompt(image.prompt, e)}
+                            >
+                              <Copy className="h-4 w-4" />
+                              复制
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="gap-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white transition-all duration-200"
+                              onClick={(e) => handleCopyAndGenerate(image.prompt, image.category, e)}
+                            >
+                              <Wand2 className="h-4 w-4" />
+                              生成
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -258,6 +281,7 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
           onClose={closeImageModal}
           imageSrc={selectedImage.src}
           prompt={selectedImage.prompt}
+          category={selectedImage.category}
         />
       )}
     </>

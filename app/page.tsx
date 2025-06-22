@@ -21,7 +21,9 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Toaster } from "react-hot-toast"
-import { Settings, Image as ImageIcon, Sparkles, RefreshCw } from "lucide-react"
+import { Settings, Image as ImageIcon, Sparkles, RefreshCw, Wand2, Plus } from "lucide-react"
+import Link from "next/link"
+import { CopyPromptDemo } from "@/components/copy-prompt-demo"
 import type { ImageWithPrompt } from "@/types/types"
 import { imageData } from "@/lib/image-data"
 import { useMobileScrollFeatures } from "@/hooks/use-pull-to-refresh"
@@ -157,6 +159,17 @@ function HomeContent() {
               <Badge variant="secondary" className="hidden md:flex bg-slate-100 text-slate-700 text-xs">
                 {filteredImages.length} / {images.length}
               </Badge>
+
+              {/* AI 生成按钮 */}
+              <Link href="/generate">
+                <Button
+                  className="gap-1 md:gap-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 hover:scale-105 transition-all duration-200 h-8 md:h-9 px-2 md:px-3 text-xs md:text-sm shadow-lg"
+                >
+                  <Wand2 className="h-4 w-4" />
+                  <span className="hidden xs:inline">AI生成</span>
+                </Button>
+              </Link>
+
               <Button
                 onClick={() => setShowPasswordModal(true)}
                 variant="outline"
@@ -171,6 +184,9 @@ function HomeContent() {
       </header>
 
       <main className="container mx-auto px-safe py-4 md:py-8 pb-20 md:pb-32">
+        {/* 一键复制功能演示 */}
+        <CopyPromptDemo />
+
         {isAdmin ? (
           <div className="mb-8 animate-in fade-in-0 slide-in-from-top-4 duration-500">
             <Tabs defaultValue="gallery" className="w-full">

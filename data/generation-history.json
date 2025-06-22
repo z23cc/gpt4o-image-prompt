@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1cac8579-2ba3-4f80-a2dd-9520bcf62eda",
+    "prompt": "为我生成我的房间设计（床、书架、沙发、电脑桌和电脑、墙上挂着绘画、绿植，窗外是城市夜景。可爱 3d 风格，c4d 渲染，轴测图。",
+    "imageUrl": "/generated/1cac8579-2ba3-4f80-a2dd-9520bcf62eda.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/1cac8579-2ba3-4f80-a2dd-9520bcf62eda.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid"
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T05:22:44.938Z",
+    "status": "completed"
+  }
+]
