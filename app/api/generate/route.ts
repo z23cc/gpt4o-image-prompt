@@ -5,8 +5,8 @@ import { existsSync } from 'fs'
 import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 
-// 设置 API 路由的最大执行时间为 5 分钟
-export const maxDuration = 300
+// 设置 API 路由的最大执行时间为 60 秒 (Vercel Hobby 计划限制)
+export const maxDuration = 60
 
 // 初始化 OpenAI
 const openai = new OpenAI({
