@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { writeFile, mkdir } from 'fs/promises'
+import { writeFile, mkdir, readFile } from 'fs/promises'
 import { existsSync } from 'fs'
 import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
@@ -152,10 +152,12 @@ export async function POST(request: NextRequest) {
 
     let history: GenerationRecord[] = []
     try {
-      const existingData = await import(historyPath).catch(() => ({ default: [] }))
-      history = existingData.default || []
+      if (existsSync(historyPath)) {
+        const fileContent = await readFile(historyPath, 'utf-8')
+        history = JSON.parse(fileContent)
+      }
     } catch {
-      // 文件不存在，使用空数组
+      // 文件不存在或解析失败，使用空数组
     }
 
     history.unshift(record) // 最新的在前面
@@ -228,10 +230,12 @@ export async function GET(request: NextRequest) {
 
     let history: GenerationRecord[] = []
     try {
-      const existingData = await import(historyPath).catch(() => ({ default: [] }))
-      history = existingData.default || []
+      if (existsSync(historyPath)) {
+        const fileContent = await readFile(historyPath, 'utf-8')
+        history = JSON.parse(fileContent)
+      }
     } catch {
-      // 文件不存在，返回空数组
+      // 文件不存在或解析失败，返回空数组
     }
 
     // 只返回最近50条记录
