@@ -1,5 +1,28 @@
 [
   {
+    "id": "9c78c702-8f39-4380-bf85-fea867b34813",
+    "prompt": "照片中的角色的 3D Q 版形象穿过传送门，牵着观众的手，在将观众拉向前时动态地回头一看。传送门外的背景是观众的现实世界，一个典型的程序员的书房，有书桌，显示器和笔记本电脑，传送门内是角色所处的3D Q 版世界，细节可以参考照片，整体呈蓝色调，和现实世界形成鲜明对比。传送门散发着神秘的蓝色和紫色色调，是两个世界之间的完美椭圆形框架处在画面中间。从第三人称视角拍摄的摄像机角度，显示观看者的手被拉入角色世界。3：2 的宽高比。",
+    "imageUrl": "/generated/9c78c702-8f39-4380-bf85-fea867b34813.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/9c78c702-8f39-4380-bf85-fea867b34813.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T08:50:12.509Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750582110308-slkoja.png"
+    ]
+  },
+  {
     "id": "67814186-9ce4-47c2-8497-0b5e55a18b69",
     "prompt": "将场景中的角色转化为3D Q版风格，放在一张拍立得照片上，相纸被一只手拿着，照片中的角色正从拍立得照片中走出，呈现出突破二维相片边框、进入二维现实空间的视觉效果。",
     "imageUrl": "/generated/67814186-9ce4-47c2-8497-0b5e55a18b69.png",

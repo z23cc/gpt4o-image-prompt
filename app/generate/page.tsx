@@ -4,7 +4,6 @@ import { Suspense } from 'react'
 import { ImageGenerator } from '@/components/image-generator'
 import { FeatureShowcase } from '@/components/feature-showcase'
 import { useApiConfig } from '@/hooks/use-api-config'
-import { ConfigStatus } from '@/components/config-status'
 import { ResponsiveLayout } from '@/components/responsive-layout'
 import { ScrollIndicator } from '@/components/scroll-indicator'
 import { Sparkles, ArrowLeft, Star } from 'lucide-react'
@@ -45,17 +44,7 @@ function GenerateContent() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              {config && (
-                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-purple-50 to-pink-50 rounded-full border border-purple-200">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-purple-700">{config.displayName}</span>
-                  {config.isCustomEndpoint && (
-                    <span className="text-xs text-purple-500">({config.endpoint})</span>
-                  )}
-                </div>
-              )}
-            </div>
+
           </div>
         </div>
       </header>
@@ -96,10 +85,7 @@ function GenerateContent() {
           </div>
         </motion.div>
 
-        {/* 配置状态显示 */}
-        <div className="mb-6">
-          <ConfigStatus showDetails={false} />
-        </div>
+
 
         {/* 主要内容区域 */}
         <Tabs defaultValue="generator" className="w-full">

@@ -408,45 +408,45 @@ export function ImageGenerator() {
 
               {/* 已上传图片预览 */}
               {uploadedImages.length > 0 && (
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-3">
                   {uploadedImages.map((image, index) => (
                     <div key={index} className="relative group">
-                      <div className="aspect-square rounded-lg overflow-hidden bg-slate-100 border">
+                      <div className="aspect-square rounded-lg overflow-hidden bg-slate-100 border max-w-[120px]">
                         <Image
                           src={image.preview}
                           alt={`上传的图片 ${index + 1}`}
-                          width={200}
-                          height={200}
+                          width={120}
+                          height={120}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <Button
                         variant="destructive"
                         size="sm"
-                        className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-1 right-1 h-5 w-5 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={() => removeImage(index)}
                         disabled={isGenerating}
                       >
-                        <X className="h-3 w-3" />
+                        <X className="h-2.5 w-2.5" />
                       </Button>
-                      <div className="absolute bottom-2 left-2 flex gap-1">
+                      <div className="absolute bottom-1 left-1 flex gap-1">
                         <Badge
                           variant="secondary"
-                          className="text-xs"
+                          className="text-[10px] px-1 py-0.5"
                         >
                           {image.type === 'reference' ? '参考图' : '遮罩'}
                         </Badge>
                         {image.uploadData ? (
                           <Badge
                             variant="outline"
-                            className="text-xs bg-green-50 text-green-700 border-green-200"
+                            className="text-[10px] px-1 py-0.5 bg-green-50 text-green-700 border-green-200"
                           >
                             已上传
                           </Badge>
                         ) : (
                           <Badge
                             variant="outline"
-                            className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200"
+                            className="text-[10px] px-1 py-0.5 bg-yellow-50 text-yellow-700 border-yellow-200"
                           >
                             本地
                           </Badge>
