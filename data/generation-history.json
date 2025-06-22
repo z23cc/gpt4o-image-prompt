@@ -1,5 +1,338 @@
 [
   {
+    "id": "67814186-9ce4-47c2-8497-0b5e55a18b69",
+    "prompt": "将场景中的角色转化为3D Q版风格，放在一张拍立得照片上，相纸被一只手拿着，照片中的角色正从拍立得照片中走出，呈现出突破二维相片边框、进入二维现实空间的视觉效果。",
+    "imageUrl": "/generated/67814186-9ce4-47c2-8497-0b5e55a18b69.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/67814186-9ce4-47c2-8497-0b5e55a18b69.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T08:20:31.572Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750580336194-fpc71a.png"
+    ]
+  },
+  {
+    "id": "f3467d72-5579-40e0-8b75-d2d0cdd78a9e",
+    "prompt": "将场景中的角色转化为3D Q版风格，放在一张拍立得照片上，相纸被一只手拿着，照片中的角色正从拍立得照片中走出，呈现出突破二维相片边框、进入二维现实空间的视觉效果。",
+    "imageUrl": "/generated/f3467d72-5579-40e0-8b75-d2d0cdd78a9e.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/f3467d72-5579-40e0-8b75-d2d0cdd78a9e.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T08:18:56.644Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750580058647-7m1u7w.png"
+    ]
+  },
+  {
+    "id": "6436b486-81c1-4c34-a06a-e62a14971108",
+    "prompt": "将场景中的角色转化为3D Q版风格，放在一张拍立得照片上，相纸被一只手拿着，照片中的角色正从拍立得照片中走出，呈现出突破二维相片边框、进入二维现实空间的视觉效果。",
+    "imageUrl": "/generated/6436b486-81c1-4c34-a06a-e62a14971108.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/6436b486-81c1-4c34-a06a-e62a14971108.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T08:16:43.782Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750580058647-7m1u7w.png"
+    ]
+  },
+  {
+    "id": "298ce4ed-4001-498e-ad7b-3fba9d21b876",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/298ce4ed-4001-498e-ad7b-3fba9d21b876.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/298ce4ed-4001-498e-ad7b-3fba9d21b876.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T08:01:25.511Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750579201158-epb0x2.png"
+    ]
+  },
+  {
+    "id": "7ac17693-cc2a-4356-97fa-7bf8e4544ef5",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/7ac17693-cc2a-4356-97fa-7bf8e4544ef5.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/7ac17693-cc2a-4356-97fa-7bf8e4544ef5.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:51:55.429Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750578624614-f7fji2.png"
+    ]
+  },
+  {
+    "id": "2f0857ce-2b66-4acb-8388-2d685cd00717",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/2f0857ce-2b66-4acb-8388-2d685cd00717.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/2f0857ce-2b66-4acb-8388-2d685cd00717.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:42:48.917Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750578089471-oc5uno.png"
+    ]
+  },
+  {
+    "id": "92ebc54a-cf96-41d3-9aab-3438f691f7dd",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/92ebc54a-cf96-41d3-9aab-3438f691f7dd.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/92ebc54a-cf96-41d3-9aab-3438f691f7dd.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:37:28.276Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750577512651-pjrhob.png"
+    ]
+  },
+  {
+    "id": "fa21e5ba-2bc7-4b29-95aa-efb6052c6ff3",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/fa21e5ba-2bc7-4b29-95aa-efb6052c6ff3.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/fa21e5ba-2bc7-4b29-95aa-efb6052c6ff3.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:34:06.672Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750577512651-pjrhob.png"
+    ]
+  },
+  {
+    "id": "7f1ef400-e1f7-4893-a437-de19c75035a3",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/7f1ef400-e1f7-4893-a437-de19c75035a3.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/7f1ef400-e1f7-4893-a437-de19c75035a3.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:27:06.534Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750576945169-ebxtsp.png"
+    ]
+  },
+  {
+    "id": "d4eb07e8-0135-40c1-8420-2a4d8d7b7fd3",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/d4eb07e8-0135-40c1-8420-2a4d8d7b7fd3.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/d4eb07e8-0135-40c1-8420-2a4d8d7b7fd3.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:25:27.339Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750576945169-ebxtsp.png"
+    ]
+  },
+  {
+    "id": "26863148-0b10-4341-92dd-7773d6bfe7b3",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/26863148-0b10-4341-92dd-7773d6bfe7b3.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/26863148-0b10-4341-92dd-7773d6bfe7b3.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid",
+      "mode": "image-to-image",
+      "strength": 0.8,
+      "guidance": 7.5,
+      "batchSize": 1
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:23:32.026Z",
+    "status": "completed",
+    "referenceImages": [
+      "https://midjourney-plus-js.oss-cn-hongkong.aliyuncs.com/image-generator/1750576945169-ebxtsp.png"
+    ]
+  },
+  {
+    "id": "41fcf16f-09cc-4117-958c-81770c5929f2",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/41fcf16f-09cc-4117-958c-81770c5929f2.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/41fcf16f-09cc-4117-958c-81770c5929f2.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "hd",
+      "style": "natural"
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:10:42.407Z",
+    "status": "completed"
+  },
+  {
+    "id": "5bcde8fb-aa89-4569-b19b-ffab090d7037",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/5bcde8fb-aa89-4569-b19b-ffab090d7037.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/5bcde8fb-aa89-4569-b19b-ffab090d7037.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid"
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:08:30.389Z",
+    "status": "completed"
+  },
+  {
+    "id": "295172c8-cdd6-428d-a358-ca8797cc8826",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/295172c8-cdd6-428d-a358-ca8797cc8826.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/295172c8-cdd6-428d-a358-ca8797cc8826.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid"
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T07:05:50.814Z",
+    "status": "completed"
+  },
+  {
+    "id": "c5c9d763-445f-4a48-a463-9568575c5700",
+    "prompt": "以附上的自拍照为精确参照，生成一张专业肖像照，100%保留我的面部特征（包括脸型、发型、肤色和表情），头部端正。采用影棚级灯光与柔和的中性背景，将我的着装调整为正式职业装束，确保整张照片既彰显自信又透出亲和力，适合用作领英个人资料，图片比例3：4",
+    "imageUrl": "/generated/c5c9d763-445f-4a48-a463-9568575c5700.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/c5c9d763-445f-4a48-a463-9568575c5700.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid"
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T06:44:59.029Z",
+    "status": "completed"
+  },
+  {
+    "id": "4f49e607-f179-4fba-8655-b7428150426d",
+    "prompt": "特写镜头：一只手正拿着一张设计成 VS Code 中 JSON 文件外观的名片。名片上的代码以真实的 JSON 语法高亮格式呈现。窗口界面包含典型的工具栏图标和标题栏，标题显示为 Business Card.json，整体风格与 VS Code 界面完全一致。背景略微虚化，突出展示名片内容。名片上的 JSON 代码如下所示：{\"name\": \"Jamez Bondos\", \"title\": \"Your Title\", \"email\": \"your@email.com\", \"link\": \"yourwebsite\"}",
+    "imageUrl": "/generated/4f49e607-f179-4fba-8655-b7428150426d.png",
+    "localPath": "/home/dzb/images/gpt4o-image-prompt/public/generated/4f49e607-f179-4fba-8655-b7428150426d.png",
+    "parameters": {
+      "size": "1024x1024",
+      "quality": "standard",
+      "style": "vivid"
+    },
+    "model": "gpt-4o-image",
+    "apiProvider": "openai",
+    "baseURL": "https://api-key.info/v1",
+    "createdAt": "2025-06-22T06:15:18.350Z",
+    "status": "completed"
+  },
+  {
     "id": "1cac8579-2ba3-4f80-a2dd-9520bcf62eda",
     "prompt": "为我生成我的房间设计（床、书架、沙发、电脑桌和电脑、墙上挂着绘画、绿植，窗外是城市夜景。可爱 3d 风格，c4d 渲染，轴测图。",
     "imageUrl": "/generated/1cac8579-2ba3-4f80-a2dd-9520bcf62eda.png",

@@ -4,10 +4,9 @@ import { motion } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { 
-  Settings, 
-  CheckCircle, 
-  AlertCircle, 
+import {
+  CheckCircle,
+  AlertCircle,
   RefreshCw,
   ExternalLink,
   Info
@@ -166,18 +165,6 @@ export function ConfigStatus({ showDetails = false, className = '' }: ConfigStat
                   >
                     <ExternalLink className="h-3 w-3" />
                     访问端点
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2 text-xs"
-                    onClick={() => {
-                      // 这里可以添加测试 API 连接的功能
-                      console.log('测试 API 连接')
-                    }}
-                  >
-                    <Settings className="h-3 w-3" />
-                    测试连接
                   </Button>
                 </div>
               )}

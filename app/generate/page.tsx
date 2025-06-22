@@ -2,13 +2,14 @@
 
 import { Suspense } from 'react'
 import { ImageGenerator } from '@/components/image-generator'
+import { FeatureShowcase } from '@/components/feature-showcase'
 import { useApiConfig } from '@/hooks/use-api-config'
 import { ConfigStatus } from '@/components/config-status'
-import { ApiStatus } from '@/components/api-status'
 import { ResponsiveLayout } from '@/components/responsive-layout'
 import { ScrollIndicator } from '@/components/scroll-indicator'
-import { Sparkles, ArrowLeft } from 'lucide-react'
+import { Sparkles, ArrowLeft, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
@@ -96,17 +97,31 @@ function GenerateContent() {
         </motion.div>
 
         {/* 配置状态显示 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <div className="lg:col-span-2">
-            <ConfigStatus showDetails={false} />
-          </div>
-          <div>
-            <ApiStatus />
-          </div>
+        <div className="mb-6">
+          <ConfigStatus showDetails={false} />
         </div>
 
-        {/* 生成器组件 */}
-        <ImageGenerator />
+        {/* 主要内容区域 */}
+        <Tabs defaultValue="generator" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsTrigger value="generator" className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              开始创作
+            </TabsTrigger>
+            <TabsTrigger value="features" className="flex items-center gap-2">
+              <Star className="h-4 w-4" />
+              功能介绍
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="generator" className="space-y-0">
+            <ImageGenerator />
+          </TabsContent>
+
+          <TabsContent value="features" className="space-y-0">
+            <FeatureShowcase />
+          </TabsContent>
+        </Tabs>
 
         {/* 使用提示 */}
         <motion.div

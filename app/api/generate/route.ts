@@ -27,12 +27,17 @@ interface GenerationRecord {
     size: string
     quality: string
     style: string
+    mode: string
+    strength?: number
+    guidance?: number
+    batchSize?: number
   }
   model: string
   apiProvider: string
   baseURL: string
   createdAt: string
   status: 'completed' | 'failed'
+  referenceImages?: string[] // 存储参考图片URL
 }
 
 interface GenerateRequest {
@@ -40,6 +45,18 @@ interface GenerateRequest {
   size?: '1024x1024' | '1792x1024' | '1024x1792'
   quality?: 'standard' | 'hd'
   style?: 'vivid' | 'natural'
+  mode?: 'text-to-image' | 'image-to-image' | 'inpainting'
+  images?: Array<{
+    data: string // URL或base64
+    type: 'reference' | 'mask'
+    isUrl?: boolean
+  }>
+  // 高级参数
+  strength?: number
+  guidance?: number
+  steps?: number
+  seed?: number
+  batchSize?: number
 }
 
 // 简单的配额检查（基于 IP 或 session）
@@ -68,7 +85,17 @@ function incrementDailyCount(identifier: string): void {
 export async function POST(request: NextRequest) {
   try {
     const body: GenerateRequest = await request.json()
-    const { prompt, size = '1024x1024', quality = 'standard', style = 'vivid' } = body
+    const {
+      prompt,
+      size = '1024x1024',
+      quality = 'standard',
+      style = 'vivid',
+      mode = 'text-to-image',
+      images = [],
+      strength = 0.8,
+      guidance = 7.5,
+      batchSize = 1
+    } = body
 
     // 验证输入
     if (!prompt || prompt.trim().length === 0) {
@@ -85,6 +112,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // 验证图片重绘和局部修复模式的图片输入
+    if ((mode === 'image-to-image' || mode === 'inpainting') && images.length === 0) {
+      return NextResponse.json(
+        { error: `${mode === 'image-to-image' ? '图片重绘' : '局部修复'}模式需要上传参考图片` },
+        { status: 400 }
+      )
+    }
+
+    if (mode === 'inpainting' && images.length < 2) {
+      return NextResponse.json(
+        { error: '局部修复模式需要上传原图片和遮罩图片' },
+        { status: 400 }
+      )
+    }
+
     // 简单的配额检查（基于 IP）
     const clientIP = request.headers.get('x-forwarded-for') || 'unknown'
     if (!checkDailyLimit(clientIP)) {
@@ -94,18 +136,72 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // 提取图片URL（优先使用OSS链接）
+    const imageUrls = images.map(img => ({
+      url: img.isUrl ? img.data : null, // 只使用URL，忽略base64
+      type: img.type
+    })).filter(img => img.url) // 只保留有URL的图片
+
     // 生成唯一ID
     const generationId = uuidv4()
 
-    // 调用 OpenAI API
-    const response = await openai.images.generate({
-      model: IMAGE_MODEL,
-      prompt,
-      size,
-      quality,
-      style,
-      n: 1,
-    })
+    // 根据模式调用不同的API
+    let response: any
+
+    if (mode === 'text-to-image') {
+      // 标准文本生图
+      response = await openai.images.generate({
+        model: IMAGE_MODEL,
+        prompt,
+        size,
+        quality,
+        style,
+        n: batchSize,
+      })
+    } else if (mode === 'image-to-image' || mode === 'inpainting') {
+      // 图片重绘和局部修复模式
+      const referenceImageUrl = imageUrls.find(img => img.type === 'reference')?.url
+
+      if (!referenceImageUrl) {
+        throw new Error('未找到参考图片URL，请确保图片已上传到OSS')
+      }
+
+      // 构建增强的提示词，直接包含OSS链接
+      let enhancedPrompt = prompt
+
+      if (referenceImageUrl) {
+        if (mode === 'image-to-image') {
+          enhancedPrompt = `参考图片: ${referenceImageUrl}
+
+基于上述参考图片，${prompt}。请保持整体构图和结构，同时应用所描述的修改。风格: ${style}，强度: ${strength}`
+        } else {
+          const maskImageUrl = imageUrls.find(img => img.type === 'mask')?.url
+          enhancedPrompt = `原图片: ${referenceImageUrl}${maskImageUrl ? `
+遮罩图片: ${maskImageUrl}` : ''}
+
+对上述图片进行局部修复: ${prompt}。请确保新内容与现有图像无缝融合。`
+        }
+      }
+
+      // 调用图片生成API，将OSS链接包含在提示词中
+      response = await openai.images.generate({
+        model: IMAGE_MODEL,
+        prompt: enhancedPrompt.slice(0, 4000), // 确保不超过长度限制
+        size,
+        quality,
+        style,
+        n: batchSize,
+      })
+
+      console.log(`${mode} mode - OSS URL injected into prompt`)
+      console.log(`Reference image URL: ${referenceImageUrl}`)
+      console.log(`Enhanced prompt: ${enhancedPrompt.slice(0, 200)}...`)
+
+      if (mode === 'inpainting') {
+        const maskImageUrl = imageUrls.find(img => img.type === 'mask')?.url
+        console.log(`Mask image URL: ${maskImageUrl}`)
+      }
+    }
 
     const imageUrl = response.data[0]?.url
     if (!imageUrl) {
@@ -135,12 +231,21 @@ export async function POST(request: NextRequest) {
       prompt,
       imageUrl: storedImageUrl,
       localPath: filePath,
-      parameters: { size, quality, style },
+      parameters: {
+        size,
+        quality,
+        style,
+        mode,
+        strength: mode === 'image-to-image' ? strength : undefined,
+        guidance,
+        batchSize
+      },
       model: IMAGE_MODEL,
       apiProvider: 'openai',
       baseURL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1',
       createdAt: new Date().toISOString(),
-      status: 'completed'
+      status: 'completed',
+      referenceImages: imageUrls.map(img => img.url).filter((url): url is string => Boolean(url)) // 只保存OSS URL
     }
 
     // 保存到历史记录文件

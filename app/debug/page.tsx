@@ -23,19 +23,7 @@ export default function DebugPage() {
     }
   }
 
-  const testDebug = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await fetch('/api/debug')
-      const data = await response.json()
-      setResult({ type: 'debug', data })
-    } catch (err) {
-      setError(err instanceof Error ? err.message : '调试测试失败')
-    } finally {
-      setLoading(false)
-    }
-  }
+
 
   const testGenerate = async () => {
     setLoading(true)
@@ -77,12 +65,9 @@ export default function DebugPage() {
     <div className="container mx-auto p-8 max-w-4xl">
       <h1 className="text-2xl font-bold mb-6">API 调试页面</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <Button onClick={testConfig} disabled={loading}>
           测试配置 API
-        </Button>
-        <Button onClick={testDebug} disabled={loading}>
-          测试调试 API
         </Button>
         <Button onClick={testGenerate} disabled={loading}>
           测试生成 API
