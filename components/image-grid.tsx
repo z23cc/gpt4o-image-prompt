@@ -27,12 +27,12 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
 
   const handleCopyPrompt = async (prompt: string, e: React.MouseEvent) => {
     e.stopPropagation()
-    await copyOnly(prompt)
-  }
-
-  const handleCopyAndGenerate = (prompt: string, category: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-    copyAndGenerate(prompt, category)
+    try {
+      await navigator.clipboard.writeText(prompt)
+      toast.success('提示词已复制到剪贴板！', { icon: '📋' })
+    } catch (error) {
+      toast.error('复制失败，请重试')
+    }
   }
 
   const openImageModal = (image: ImageWithPrompt) => {
@@ -53,14 +53,14 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
             return (
               <div
                 key={image.id}
-                className="animate-in fade-in-0 slide-in-from-bottom-4 group"
+                className="animate-in fade-in-0 slide-in-from-bottom-4 group h-full"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <Card className="overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-500 bg-white/80 backdrop-blur-sm hover:scale-[1.02] hover:-translate-y-1">
-                  <CardContent className="p-0">
-                    {/* 图片容器 */}
+                <Card className="overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-500 bg-white/80 backdrop-blur-sm hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col">
+                  <CardContent className="p-0 h-full flex flex-col">
+                    {/* 图片容器 - 固定高度 */}
                     <div
-                      className="relative aspect-[4/3] overflow-hidden cursor-pointer"
+                      className="relative aspect-[4/3] overflow-hidden cursor-pointer flex-shrink-0"
                       onClick={() => openImageModal(image)}
                     >
                       <Image
@@ -68,6 +68,7 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                         alt={image.prompt}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw"
                       />
 
                       {/* 分类标签 */}
@@ -104,33 +105,20 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                           <Copy className="h-4 w-4" />
                           复制
                         </Button>
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100"
-                          onClick={(e) => handleCopyAndGenerate(image.prompt, image.category, e)}
-                        >
-                          <Wand2 className="h-4 w-4" />
-                          生成
-                        </Button>
                       </div>
                     </div>
 
-                    {/* 内容区域 */}
-                    <div className="p-4 space-y-3">
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed">
+                    {/* 内容区域 - 弹性布局 */}
+                    <div className="p-4 space-y-3 flex-1 flex flex-col">
+                      <div className="flex-1">
+                        <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed h-10">
                           {image.prompt}
                         </p>
-                        <Badge variant="secondary" className="shrink-0 text-xs bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-blue-200">
-                          <Sparkles className="h-3 w-3 mr-1" />
-                          AI
-                        </Badge>
                       </div>
 
                       {/* 标签显示 */}
                       {image.tags && image.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1 min-h-[20px]">
                           {image.tags.slice(0, 3).map((tag, tagIndex) => (
                             <Badge key={tagIndex} variant="outline" className="text-xs bg-slate-50 text-slate-600 border-slate-300">
                               {tag}
@@ -139,7 +127,7 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                         </div>
                       )}
 
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 mt-auto">
                         <Button
                           variant="outline"
                           size="sm"
@@ -148,14 +136,6 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                         >
                           <Copy className="h-4 w-4" />
                           复制
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="flex-1 gap-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white transition-all duration-200"
-                          onClick={(e) => handleCopyAndGenerate(image.prompt, image.category, e)}
-                        >
-                          <Wand2 className="h-4 w-4" />
-                          生成
                         </Button>
                       </div>
                     </div>
@@ -215,10 +195,6 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                               >
                                 {categoryInfo.name}
                               </Badge>
-                              <Badge variant="secondary" className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-blue-200">
-                                <Sparkles className="h-3 w-3 mr-1" />
-                                AI
-                              </Badge>
                             </div>
                             <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
                               {image.prompt}
@@ -243,14 +219,6 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
                               <Copy className="h-4 w-4" />
                               复制
                             </Button>
-                            <Button
-                              size="sm"
-                              className="gap-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white transition-all duration-200"
-                              onClick={(e) => handleCopyAndGenerate(image.prompt, image.category, e)}
-                            >
-                              <Wand2 className="h-4 w-4" />
-                              生成
-                            </Button>
                           </div>
                         </div>
                       </div>
@@ -270,7 +238,7 @@ export function ImageGrid({ images, viewMode = 'grid' }: ImageGridProps) {
             <Sparkles className="h-8 w-8 text-slate-400" />
           </div>
           <h3 className="text-lg font-medium text-slate-800 mb-2">暂无图片</h3>
-          <p className="text-slate-500">开始添加一些精彩的AI生成图片吧！</p>
+          <p className="text-slate-500">开始添加一些精彩的图片吧！</p>
         </div>
       )}
 

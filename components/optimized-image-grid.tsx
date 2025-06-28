@@ -131,21 +131,22 @@ export function OptimizedImageGrid({
         onAnimationEnd={endRenderTime}
       >
         <Card className={`
-          overflow-hidden border-0 shadow-md bg-white/80 backdrop-blur-sm h-full
+          overflow-hidden border-0 shadow-md bg-white/80 backdrop-blur-sm h-full flex flex-col
           ${performanceMode === 'battery'
             ? 'hover:shadow-lg transition-shadow duration-200'
             : 'hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1'
           }
         `}>
           <CardContent className="p-0 h-full flex flex-col">
-            {/* 图片容器 */}
-            <div className="relative aspect-[4/3] overflow-hidden">
+            {/* 图片容器 - 固定高度 */}
+            <div className="relative aspect-[4/3] overflow-hidden flex-shrink-0">
               <OptimizedImage
                 src={image.src || "/placeholder.svg"}
                 alt={image.prompt}
                 className="w-full h-full"
                 priority={index < itemsPerRow} // 首行图片优先加载
                 quality={performanceMode === 'high' ? 90 : performanceMode === 'balanced' ? 75 : 60}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw"
               />
               
               {/* 分类标签 */}
@@ -182,21 +183,17 @@ export function OptimizedImageGrid({
               </div>
             </div>
 
-            {/* 内容区域 */}
+            {/* 内容区域 - 弹性布局 */}
             <div className="p-4 space-y-3 flex-1 flex flex-col">
-              <div className="flex items-start justify-between gap-2 flex-1">
-                <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed">
+              <div className="flex-1">
+                <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed h-10">
                   {image.prompt}
                 </p>
-                <Badge variant="secondary" className="shrink-0 text-xs bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-blue-200">
-                  <Sparkles className="h-3 w-3 mr-1" />
-                  AI
-                </Badge>
               </div>
               
               {/* 标签显示 */}
               {image.tags && image.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1 min-h-[20px]">
                   {image.tags.slice(0, 3).map((tag, tagIndex) => (
                     <Badge key={tagIndex} variant="outline" className="text-xs bg-slate-50 text-slate-600 border-slate-300">
                       {tag}
@@ -280,10 +277,6 @@ export function OptimizedImageGrid({
                         className={`${categoryInfo.color} text-white text-xs`}
                       >
                         {categoryInfo.name}
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-blue-200">
-                        <Sparkles className="h-3 w-3 mr-1" />
-                        AI
                       </Badge>
                     </div>
                     <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">

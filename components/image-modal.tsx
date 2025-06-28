@@ -250,19 +250,20 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt, category }: Imag
   }, [isOpen, onClose, isFullscreen, zoomIn, zoomOut, resetZoom])
 
   const handleCopyPrompt = async () => {
-    await copyOnly(prompt)
-  }
-
-  const handleCopyAndGenerate = () => {
-    copyAndGenerate(prompt, category)
+    try {
+      await navigator.clipboard.writeText(prompt)
+      toast.success('提示词已复制到剪贴板！', { icon: '📋' })
+    } catch (error) {
+      toast.error('复制失败，请重试')
+    }
   }
 
   const downloadImage = () => {
     const link = document.createElement('a')
     link.href = imageSrc
-    link.download = `ai-image-${Date.now()}.jpg`
+    link.download = `ai-image-${Date.now()}.png`
     link.click()
-    toast.success("图片下载开始！")
+    toast.success('图片下载成功！', { icon: '📥' })
   }
 
   return (
@@ -440,7 +441,7 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt, category }: Imag
                 <Card className="bg-slate-700/50 border-slate-600">
                   <CardContent className="p-4 space-y-4">
                     <div>
-                      <h3 className="text-sm font-medium text-slate-200 mb-2">AI 提示词</h3>
+                      <h3 className="text-sm font-medium text-slate-200 mb-2">提示词</h3>
                       <p className="text-sm text-slate-300 leading-relaxed bg-slate-800/50 p-3 rounded-lg selectable">
                         {prompt}
                       </p>
@@ -454,13 +455,6 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt, category }: Imag
                       >
                         <Copy className="h-4 w-4" />
                         复制
-                      </Button>
-                      <Button
-                        onClick={handleCopyAndGenerate}
-                        className="touch-feedback-btn flex-1 gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
-                      >
-                        <Wand2 className="h-4 w-4" />
-                        生成
                       </Button>
                     </div>
 
@@ -490,7 +484,7 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt, category }: Imag
               `}>
                 <div className="p-4 space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-slate-200">AI 提示词</h3>
+                    <h3 className="text-sm font-medium text-slate-200">提示词</h3>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -513,14 +507,6 @@ export function ImageModal({ isOpen, onClose, imageSrc, prompt, category }: Imag
                     >
                       <Copy className="h-4 w-4" />
                       复制
-                    </Button>
-
-                    <Button
-                      onClick={handleCopyAndGenerate}
-                      className="touch-feedback-btn flex-1 gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
-                    >
-                      <Wand2 className="h-4 w-4" />
-                      生成
                     </Button>
 
                     <Button
